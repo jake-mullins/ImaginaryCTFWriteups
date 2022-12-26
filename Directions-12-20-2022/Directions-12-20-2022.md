@@ -71,4 +71,4 @@ But this didn't work for an unknown error. Likely a sizing issue, but instead of
 new_data = flag_data + fake_data + flag_header + fake_header + eocd_record
 ```
 
- This reveals the flag.
+This reveals a false flag. The entries for both ```flag.txt``` and ```fake.txt``` list their respective offsets within the file body as 0x00. If we manually changing the value at 0x170 to 0x74, the address of the compressed ```fake.txt``` file, we can see that it decompresses successfully into the real flag.

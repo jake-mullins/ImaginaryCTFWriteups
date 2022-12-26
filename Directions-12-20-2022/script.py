@@ -1,6 +1,6 @@
 data = open("out.zip", "rb").read()
 
-flag_data = data[0:0x74]
+flag_data = data[:0x74]
 fake_data = data[0x74:0xf8]
 
 fake_header = data[0xf8:0x146]
