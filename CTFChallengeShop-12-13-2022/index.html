@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta name="viewport" content="initial-scale=1, width=device-width">
+<title> CTF Challenge Shop </title>
+</head>
+<body>
+    <div id="source">
+        <a href="/source">Frontend Source</a>
+        <a href="/process">Backend Source</a>
+    </div>
+    <div id="flash">
+    <br>
+    </div>
+    
+    <form id="products">
+        <input name="orderId" id="cartid" type='hidden' value=0>
+        <table>
+            <tr>
+                <th>Product</th><th>Price</th><th>Quantity</th>
+            </tr>
+            
+            <tr>
+                <td><label for="0">pwn 1</label></td>
+                <td>100</td>
+                <td><input name="0" type="number" style="width:60px" value=0 id="0"></td>
+            </tr>
+            
+            <tr>
+                <td><label for="1">pwn 2</label></td>
+                <td>200</td>
+                <td><input name="1" type="number" style="width:60px" value=0 id="1"></td>
+            </tr>
+            
+            <tr>
+                <td><label for="2">crypto 1</label></td>
+                <td>300</td>
+                <td><input name="2" type="number" style="width:60px" value=0 id="2"></td>
+            </tr>
+            
+            <tr>
+                <td><label for="3">crypto 2</label></td>
+                <td>400</td>
+                <td><input name="3" type="number" style="width:60px" value=0 id="3"></td>
+            </tr>
+            
+            <tr>
+                <td><label for="4">rev 1</label></td>
+                <td>500</td>
+                <td><input name="4" type="number" style="width:60px" value=0 id="4"></td>
+            </tr>
+            
+            <tr>
+                <td><label for="5">rev 2</label></td>
+                <td>600</td>
+                <td><input name="5" type="number" style="width:60px" value=0 id="5"></td>
+            </tr>
+            
+            <tr>
+                <td><label for="6">misc 1</label></td>
+                <td>700</td>
+                <td><input name="6" type="number" style="width:60px" value=0 id="6"></td>
+            </tr>
+            
+            <tr>
+                <td><label for="7">misc 2</label></td>
+                <td>800</td>
+                <td><input name="7" type="number" style="width:60px" value=0 id="7"></td>
+            </tr>
+            
+            <tr>
+                <td><label for="8">web 1</label></td>
+                <td>100</td>
+                <td><input name="8" type="number" style="width:60px" value=0 id="8"></td>
+            </tr>
+            
+            <tr>
+                <td><label for="9">web 2</label></td>
+                <td>1000</td>
+                <td><input name="9" type="number" style="width:60px" value=0 id="9"></td>
+            </tr>
+            
+            <tr>
+                <td><label for="10">flag</label></td>
+                <td>9999999</td>
+                <td><input name="10" type="number" style="width:60px" value=0 id="10"></td>
+            </tr>
+            
+        </table>
+        <input type="submit" value="Submit">
+    </form>
+    
+<script>
+    let form = document.getElementById("products");
+    form.onsubmit = function(event) {
+        const xhr = new XMLHttpRequest();
+        const data = Object.fromEntries(new FormData(form));
+        xhr.open("POST", "/")
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        let products = {};
+        products["cart"] = [];
+        products["orderId"] = Number(data["orderId"]);
+        for (const d in data) {
+            if (data[d] !== "0") {
+              products["cart"].push({"id": Number(d), "qty": Number(data[d])});
+            }
+        }
+        xhr.send(JSON.stringify(products));
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState == XMLHttpRequest.DONE) {
+                let flash = document.getElementById("flash");
+                flash.innerHTML = xhr.response;
+                form.reset();
+            }
+        }
+        return false;
+    }
+</script>
+</body>
+</html>
