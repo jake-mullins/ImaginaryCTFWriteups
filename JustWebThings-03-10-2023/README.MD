@@ -1,0 +1,2 @@
+## JustWebThings-03-10-2023
+The file has 2 notable endpoints, the ``/`` endpoint which holds the code, and the ``/flag`` endpoint. When we visit the page, we can see that it has given us a cookie called ``token`` with a value of ``eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoibm9ybWFsIn0.IOInS-42RBXYEFQnUEelIeTmifMjmPlrgxIdOzJoawY``, a full JWT (JSON web token) string. Using ``[jwt.io](https://jwt.io/)`` we are able to alter the ``user`` field to admin. Plugging the resulting JWT into the token cookie results in the flag.
